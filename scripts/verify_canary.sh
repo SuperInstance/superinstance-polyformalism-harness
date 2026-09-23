@@ -75,6 +75,12 @@ if [ -f "$ROOT/polyvocoder-csharp/Program.csproj" ]; then
   check_port "C#/.NET    " "$CS_OUT"
 fi
 
+# SQL/SQLite (via Python bridge)
+if [ -f "$ROOT/polyvocoder-sql/canary.py" ]; then
+  SQL_OUT=$(python3 "$ROOT/polyvocoder-sql/canary.py" 2>/dev/null | grep -o '0x[0-9a-f]*' | head -1)
+  check_port "SQL/SQLite " "$SQL_OUT"
+fi
+
 # Bash via Python (Bash can't do 64-bit math natively)
 BASH_OUT=$(python3 -c "
 s = 'café Δ 日本語'
